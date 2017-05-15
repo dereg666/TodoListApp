@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dereg666.github.io/TodoApp",
+  "homepage": "https://dereg666.github.io/TodoListApp",
   "dependencies": {
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
