@@ -27,6 +27,7 @@ class TodoApp extends Component {
     this.changingName = this.changingName.bind(this);
     this.deletingList = this.deletingList.bind(this);
     this.setShowState = this.setShowState.bind(this);
+    this.changeItemNameFunc = this.changeItemNameFunc.bind(this);
   }
   setShowState(mode) {
     this.setState({ showMode: mode });
@@ -96,6 +97,13 @@ class TodoApp extends Component {
   changingName(num, name) {
     const tempLists = this.state.lists;
     tempLists[num].todoName = num.toString() + ' ' + name;
+    this.setState({ lists: tempLists });
+  }
+  changeItemNameFunc(num, name) {
+    const numList = ~~(num / sizeTime);
+    const numItem = num % sizeTime;
+    const tempLists = this.state.lists;
+    tempLists[numList].todoItems[numItem].itemName = num.toString() + ' ' + name;
     this.setState({ lists: tempLists });
   }
   deletingList(num) {
@@ -181,6 +189,7 @@ class TodoApp extends Component {
               changeNameFunc={this.changingName}
               deleteListsFunc={this.deletingList}
               showMode={this.state.showMode}
+              changeItemNameFunc={this.changeItemNameFunc}
             />)}
           </div>
         </div>

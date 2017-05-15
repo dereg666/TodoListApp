@@ -100,6 +100,7 @@ class TodoList extends Component {
               checkItemsFunc={this.props.checkItemsFunc}
               deleteItemsFunc={this.props.deleteItemsFunc}
               showMode={this.props.showMode}
+              changeItemNameFunc={this.props.changeItemNameFunc}
             />)}
           </div>
         </div>
@@ -120,6 +121,7 @@ TodoList.propTypes = {
   checkItemsFunc: PropTypes.func.isRequired,
   deleteItemsFunc: PropTypes.func.isRequired,
   showMode: PropTypes.number.isRequired,
+  changeItemNameFunc: PropTypes.func.isRequired,
 };
 
 export default TodoList;

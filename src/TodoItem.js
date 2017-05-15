@@ -15,6 +15,42 @@ class TodoItem extends Component {
       editing: 0,
     };
     this.clickEditItemName = this.clickEditItemName.bind(this);
+    this.clickEnter = this.clickEnter.bind(this);
+    this.submitFunction = this.submitFunction.bind(this);
+    this.textBlur = this.textBlur.bind(this);
+    this.textFocus = this.textFocus.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+  }
+  textFocus() {
+    if (this.state.editing === 0) {
+      this.setState({ addItemHolder: '' });
+    } else if (this.state.editing === 1) {
+      this.setState({ changeNameHolder: '' });
+    }
+  }
+  textBlur() {
+    if (this.state.editing === 1) {
+      this.setState({ changeNameHolder: 'Type to change' });
+    }
+  }
+  handleChange(event) {
+    if (this.state.editing === 1) {
+      this.setState({ changeName: event.target.value });
+    }
+  }
+  clickEnter(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      this.submitFunction();
+    }
+  }
+  submitFunction() {
+    const num = Number(this.props.itemName.split(' ', 1));
+    if (this.state.changeName && this.state.editing === 1) {
+      // console.log(this.state.changeName);
+      this.props.changeItemNameFunc(num, this.state.changeName);
+      this.setState({ editing: 0 });
+    }
   }
   clickEditItemName() {
     this.setState({ editing: 1 });
@@ -56,7 +92,17 @@ class TodoItem extends Component {
                 onClick={() => this.props.checkItemsFunc(Number(this.props.itemName.split(' ', 1)))}
               />
             }
-            <div className="itemName">{this.props.itemName.substr(this.props.itemName.indexOf(' ') + 1)}</div>
+            <input
+              className="itemName"
+              type="text"
+              value={this.state.changeName}
+              placeholder={this.state.changeNameHolder}
+              onKeyDown={this.clickEnter}
+              onChange={this.handleChange}
+              onFocus={this.textFocus}
+              onBlur={this.textBlur}
+              autoFocus
+            />
             <i
               className="icon ion-log-in myIcon sideBarEdit"
               onClick={this.submitFunction}
@@ -83,6 +129,7 @@ TodoItem.propTypes = {
   checkItemsFunc: PropTypes.func.isRequired,
   deleteItemsFunc: PropTypes.func.isRequired,
   showMode: PropTypes.number.isRequired,
+  changeItemNameFunc: PropTypes.func.isRequired,
 };
 
 export default TodoItem;
